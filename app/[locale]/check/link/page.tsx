@@ -10,6 +10,7 @@ type CheckResultData = Omit<ComponentProps<typeof CheckResult>, 'onReset'>;
 
 export default function LinkCheck() {
   const t = useTranslations('linkCheck');
+  const qrT = useTranslations('qrScanner');
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<CheckResultData | null>(null);
@@ -76,7 +77,7 @@ export default function LinkCheck() {
     setImageError('');
     setDecodedText('');
     if (!navigator.mediaDevices?.getUserMedia) {
-      setCameraError('Camera access is unavailable in this browser or app wrapper. Open the secure website in Chrome or update the APK wrapper to support camera access.');
+      setCameraError(qrT('cameraUnavailable'));
       return;
     }
     try {
@@ -118,8 +119,8 @@ export default function LinkCheck() {
       });
     } catch (error) {
       setCameraError(error instanceof Error && error.name === 'NotAllowedError'
-        ? 'Camera permission was denied. Allow camera access in your browser or app settings, then try again.'
-        : 'Could not open the camera. Check that another app is not using it and that camera permission is enabled.');
+        ? qrT('cameraDenied')
+        : qrT('cameraFailed'));
       stopCamera();
     }
   };
@@ -131,7 +132,7 @@ export default function LinkCheck() {
     setImageError('');
     setDecodedText('');
     if (!file.type.startsWith('image/')) {
-      setImageError('Choose a valid QR code image.');
+      setImageError(qrT('invalidImage'));
       return;
     }
     const image = new Image();
@@ -146,17 +147,17 @@ export default function LinkCheck() {
         ctx.drawImage(image, 0, 0);
         const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const code = jsQR(pixels.data, pixels.width, pixels.height, { inversionAttempts: 'attemptBoth' });
-        if (!code?.data) setImageError('No readable QR code was found. Try a clearer, well-lit image.');
+        if (!code?.data) setImageError(qrT('noQr'));
         else acceptDecoded(code.data);
       } catch {
-        setImageError('Could not read this image. Please try another QR image.');
+        setImageError(qrT('imageFailed'));
       } finally {
         URL.revokeObjectURL(objectUrl);
       }
     };
     image.onerror = () => {
       URL.revokeObjectURL(objectUrl);
-      setImageError('Could not open this image. Please try another file.');
+      setImageError(qrT('imageOpenFailed'));
     };
     image.src = objectUrl;
   };
@@ -198,7 +199,7 @@ export default function LinkCheck() {
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <button type="button" onClick={cameraOpen ? stopCamera : startCamera} className="flex min-h-14 items-center justify-center gap-3 rounded-2xl border border-line bg-white p-4 text-left font-bold text-ink transition hover:border-marigold/60 hover:bg-marigold/5">
           {cameraOpen ? <CameraOff className="h-5 w-5 text-danger" /> : <Camera className="h-5 w-5 text-marigold-deep" />}
-          <span>{cameraOpen ? 'Stop camera' : 'Scan with camera'}</span>
+          <span>{cameraOpen ? qrT('stopCamera') : qrT('scanWithCamera')}</span>
         </button>
         <label className="flex min-h-14 cursor-pointer items-center justify-center gap-3 rounded-2xl border border-line bg-white p-4 font-bold text-ink transition hover:border-marigold/60 hover:bg-marigold/5">
           <ImagePlus className="h-5 w-5 text-marigold-deep" />
