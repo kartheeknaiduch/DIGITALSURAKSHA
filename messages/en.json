@@ -174,5 +174,30 @@
     "callNow": "Call Now",
     "visitPortal": "Visit Portal",
     "step": "Step"
+  },
+  "qrScanner": {
+    "title": "Scan a QR code",
+    "scanWithCamera": "Scan with camera",
+    "stopCamera": "Stop camera",
+    "uploadImage": "Upload QR image",
+    "cameraInstruction": "Point your camera at a QR code and hold steady.",
+    "decoded": "QR code decoded",
+    "urlDecoded": "The link has been placed in the URL field. Scan it to check for known threats and suspicious indicators before opening it.",
+    "nonUrlDecoded": "This QR code does not contain a standard web URL. Review the content carefully; it has not been verified as safe.",
+    "clearDecoded": "Clear decoded result",
+    "privacy": "QR decoding happens on this device. Only a URL you choose to scan is sent to the link-analysis service. A decoded QR code is not automatically safe.",
+    "cameraUnavailable": "Camera access is unavailable in this browser or app wrapper. Open the secure website in Chrome or update the APK wrapper to support camera access.",
+    "cameraDenied": "Camera permission was denied. Allow camera access in your browser or app settings, then try again.",
+    "cameraFailed": "Could not open the camera. Check that another app is not using it and that camera permission is enabled.",
+    "invalidImage": "Choose a valid QR code image.",
+    "noQr": "No readable QR code was found. Try a clearer, well-lit image.",
+    "imageFailed": "Could not read this image. Please try another QR image.",
+    "imageOpenFailed": "Could not open this image. Please try another file.",
+    "websiteUrl": "Website URL",
+    "scanning": "Scanning URL…",
+    "scanLink": "Scan this link →",
+    "orDivider": "or",
+    "urlPlaceholder": "https://suspicious-link.com",
+    "hint": "Decode QR codes on your device; scan links before opening them."
   }
 }

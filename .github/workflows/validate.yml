@@ -1,0 +1,23 @@
+name: Validate Digital Suraksha
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, "feat/mobile-navigation-sms-qr"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Next.js application
+        run: npm run build
